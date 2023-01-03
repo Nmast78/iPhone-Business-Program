@@ -1,7 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
-using namespace std;
+#include <string>
+//#include <bits/stdc++.h>
 
 void inventory();
 void journal();
@@ -19,14 +20,14 @@ void removeSale();
 
 int main() {    
     int x;
-    cout <<"      \\\\       Welcome Nick      ////       " << endl;
-    cout <<"            Select an Option Below            " << endl;
-    cout <<"                                              " << endl;
-    cout << "                1. Inventory" << endl;
-    cout << "                2. Journal" << endl;
-    cout << "                3. Sales" << endl;
-    cout << "Select Your Option: ";
-    cin >> x;
+    std::cout <<"      \\\\       Welcome Nick      ////       " << std::endl;
+    std::cout <<"            Select an Option Below            " << std::endl;
+    std::cout <<"                                              " << std::endl;
+    std::cout << "                1. Inventory" << std::endl;
+    std::cout << "                2. Journal" << std::endl;
+    std::cout << "                3. Sales" << std::endl;
+    std::cout << "Select Your Option: ";
+    std::cin >> x;
 
     switch (x) {
         case 1:
@@ -43,7 +44,7 @@ int main() {
 
         default:
             system("cls");
-            cout << "\t\t\t Please select from the options given above \n" << endl;
+            std::cout << "\t\t\t Please select from the options given above \n" << std::endl;
     }
 
     return 0;
@@ -51,12 +52,12 @@ int main() {
 
 void inventory() {
     int y;
-    cout << "            Select an Option Below          " << endl;
-    cout << "                                            " << endl;
-    cout << "              1. View Inventory" << endl;
-    cout << "              2. Edit Inventory" << endl;
-    cout << "Select Your Option: ";
-    cin >> y;
+    std::cout << "            Select an Option Below          " << std::endl;
+    std::cout << "                                            " << std::endl;
+    std::cout << "              1. View Inventory" << std::endl;
+    std::cout << "              2. Edit Inventory" << std::endl;
+    std::cout << "Select Your Option: ";
+    std::cin >> y;
 
     switch (y) {
         case 1:
@@ -69,35 +70,35 @@ void inventory() {
 
         default:
             system("cls");
-            cout << "\t\t\t Please select from the options given above \n" << endl;
+            std::cout << "\t\t\t Please select from the options given above \n" << std::endl;
 
         }
         
     }
 
     void viewInventory() {
-        ifstream Inventoryfile("inventory.txt");
+        std::ifstream Inventoryfile("inventory.txt");
 
-        if(!Inventoryfile) {
-            cout << "There was an error." << endl;
+        if(Inventoryfile.is_open()) {
+            std::string inv;
+
+            while (std::getline(Inventoryfile, inv)) {
+                std::cout << inv << "\n";            
+            }
+            
+            Inventoryfile.close();
         }
-
-        string line;
-        getline(Inventoryfile, line);
-        cout << line << endl;
-
-
     }
 
     void editInventory() {
         int q;
         
-        cout << "            Select an Option Below          " << endl;
-        cout << "                                            " << endl;
-        cout << "              1. Add Inventory" << endl;
-        cout << "              2. Remove Inventory" << endl;
-        cout << "Select Your Option: ";
-        cin >> q;
+        std::cout << "            Select an Option Below          " << std::endl;
+        std::cout << "                                            " << std::endl;
+        std::cout << "              1. Add Inventory" << std::endl;
+        std::cout << "              2. Remove Inventory" << std::endl;
+        std::cout << "Select Your Option: ";
+        std::cin >> q;
 
         switch (q) {
         case 1:
@@ -110,60 +111,73 @@ void inventory() {
 
         default:
             system("cls");
-            cout << "\t\t\t Please select from the options given above \n" << endl;
+            std::cout << "\t\t\t Please select from the options given above \n" << std::endl;
 
         }
     }    
         
         void addInventory() {
-            string dateAcquired, itemNumber, model, color, storage, boughtForPrice, conditionNotes;
+            std::string dateAcquired, itemNumber, model, color, storage, boughtForPrice, conditionNotes;
 
         
-            cout << "Please Enter Item Specifics Below" << endl;
+            std::cout << "Please Enter Item Specifics Below" << std::endl;
 
-            cout << " Date Acquired: " << endl;
-            cin >> dateAcquired;
-            cout << " Item Number: " << endl;
-            cin >> itemNumber;
-            cout << " Model: " << endl;
-            cin >> model;
-            cout << " Color: " << endl;
-            cin >> color;
-            cout << " Storage: " << endl;
-            cin >> storage;
-            cout << " Bought For Price: " << endl;
-            cin >> boughtForPrice;
-            cout << " Condition Notes: " << endl;
-            cin >> conditionNotes;
+            std::cout << " Item Number: " << std::endl;
+            std::cin >> itemNumber;
+            std::cout << " Date Acquired: " << std::endl;
+            std::cin >> dateAcquired;
+            std::cout << " Model: " << std::endl;
+            std::cin >> model;
+            std::cout << " Color: " << std::endl;
+            std::cin >> color;
+            std::cout << " Storage: " << std::endl;
+            std::cin >> storage;
+            std::cout << " Bought For Price: " << std::endl;
+            std::cin >> boughtForPrice;
+            std::cout << " Condition Notes: " << std::endl;
+            std::cin >> conditionNotes;
 
-            ofstream InventoryFile("inventory.txt", ios::app);
+            std::ofstream InventoryFile("inventory.txt", std::ios::app);
 
-            InventoryFile << dateAcquired << "   " << itemNumber << "   " << model << " " << color << " " << storage << " " << boughtForPrice << " " << conditionNotes << " " << endl;
+            InventoryFile << itemNumber << "   " << dateAcquired << "   " << model << " " << color << " " << storage << " " << boughtForPrice << " " << conditionNotes << " " << std::endl;
 
             InventoryFile.close();
 
-            cout << "Item has been added!" << endl;
+            std::cout << "Item has been added!" << std::endl;
         }
-
+        //Doesn't work right
         void removeInventory() {
-            int num;
+            std::string line, number;
 
-            cout << "Enter the item number you  would like to remove: ";
-            cin >> num;
-        
-            fstream inventoryFile("inventory.txt");
-            inventoryFile.open("inventory.txt", ios::in);
+            std::cout << "Please enter the item number you want to delete: ";
+            std::cin >> number;
+
+            std::ifstream InventoryFile;
+            InventoryFile.open("inventory.txt");
+            std::ofstream temp;
+            temp.open("temp.txt");
+            while(getline(InventoryFile, line)) {
+                if(line != number) {
+                    temp << line << std::endl;
+                }
+            }
+            std::cout << "Item number " << number << " has been deleted." << std::endl;
+
+            InventoryFile.close();
+            temp.close();
+            remove("inventory.txt");
+            rename("temp.txt", "inventory.txt");
         }
 
 void journal() {
     int p;
         
-        cout << "            Select an Option Below          " << endl;
-        cout << "                                            " << endl;
-        cout << "              1. View All Transactions" << endl;
-        cout << "              2. Add Transaction" << endl;
-        cout << "Select Your Option: ";
-        cin >> p;
+        std::cout << "            Select an Option Below          " << std::endl;
+        std::cout << "                                            " << std::endl;
+        std::cout << "              1. View All Transactions" << std::endl;
+        std::cout << "              2. Add Transaction" << std::endl;
+        std::cout << "Select Your Option: ";
+        std::cin >> p;
 
         switch (p) {
         case 1:
@@ -176,48 +190,58 @@ void journal() {
 
         default:
             system("cls");
-            cout << "\t\t\t Please select from the options given above \n" << endl;
+            std::cout << "\t\t\t Please select from the options given above \n" << std::endl;
 
         }
     
     } 
     
     void viewTransaction() {
-        fstream transactionFile("transaction.txt");
-        transactionFile.open("transaction.txt", ios::in);
+        std::ifstream transactionFile("transaction.txt");
 
-        if(!transactionFile) {
-            cout << "There was an error." << endl;
+        if (transactionFile.is_open()) {
+            std::string tp;
+
+            while(getline(transactionFile, tp)) {
+                std::cout << tp << "\n";
+            }
+
+            transactionFile.close();
         }
+        
     }
 
     void addTransaction() {
-        string date, description, amount;
+        std::string date, description, amount;
 
-        cout << "Please enter item specifics below: " << endl;
+        std::cout << "Please enter item specifics below: " << std::endl;
 
-        cout << "Transaction Date: ";
-        cin >> date;
-        cout << "Description: ";
-        cin >> description;
-        cout << "Amount: ";
-        cin >> amount;
+        std::cout << "Transaction Date: ";
+        std::cin >> date;
+        std::cout << "Description: ";
+        std::cin >> description;
+        std::cout << "Amount: ";
+        std::cin >> amount;
 
-        fstream input("transaction.txt");
+        std::ofstream transactionFile ("transaction.txt", std::ios::app);
 
-        input.close();
+        transactionFile << date << "  " << description << "  " << amount;
+
+        transactionFile.close();
+
+        std::cout << "Transaction has been added!" << std::endl;
         
     }
 
 void sales() {
     int a;
         
-        cout << "            Select an Option Below          " << endl;
-        cout << "                                            " << endl;
-        cout << "              1. View Sales" << endl;
-        cout << "              2. Edit Sales" << endl;
-        cout << "Select Your Option: ";
-        cin >> a;
+        std::cout << "            Select an Option Below          " << std::endl;
+        std::cout << "                                            " << std::endl;
+        std::cout << "              1. View Sales" << std::endl;
+        std::cout << "              2. Edit Sales" << std::endl;
+        std::cout << "Select Your Option: ";
+        std::cin >> a;
 
         switch (a) {
         case 1:
@@ -230,30 +254,35 @@ void sales() {
 
         default:
             system("cls");
-            cout << "\t\t\t Please select from the options given above \n" << endl;
+            std::cout << "\t\t\t Please select from the options given above \n" << std::endl;
 
         }
 
 }
 
     void viewSales() {
-        fstream salesFile("sales.txt");
-        salesFile.open("sales.txt", ios::in);
+        std::ifstream salesFile("sales.txt");
 
-        if(!salesFile) {
-            cout << "There was an error." << endl;
+        if(salesFile.is_open()) {
+            std::string sal;
+
+            while(getline(salesFile, sal)) {
+                std::cout << sal << "\n";
+            }
+
+            salesFile.close();
         }
     }
 
     void editSales() {
         int u;
 
-        cout << "            Select an Option Below          " << endl;
-        cout << "                                            " << endl;
-        cout << "              1. View Sales" << endl;
-        cout << "              2. Edit Sales" << endl;
-        cout << "Select Your Option: ";
-        cin >> u;
+        std::cout << "            Select an Option Below          " << std::endl;
+        std::cout << "                                            " << std::endl;
+        std::cout << "              1. Add sale" << std::endl;
+        std::cout << "              2. Remove sale" << std::endl;
+        std::cout << "Select Your Option: ";
+        std::cin >> u;
 
         switch(u) {
             case 1:
@@ -266,34 +295,38 @@ void sales() {
 
             default:
                 system("cls");
-                cout << "\t\t\t Please select from the options given above \n" << endl;
+                std::cout << "\t\t\t Please select from the options given above \n" << std::endl;
 
         }
 
     }
 
         void addSale() {
-            string date, itemNumber, soldForPrice, shippingCost, repairCost;
+            std::string date, itemNumber, soldForPrice, shippingCost, repairCost;
 
-            cout << "Please enter item specifics below: " << endl;
+            std::cout << "Please enter item specifics below: " << std::endl;
 
-            cout << "Date: ";
-            cin >> date;
-            cout << "Item Number: ";
-            cin >> itemNumber;
-            cout << "Sold For Price: ";
-            cin >> soldForPrice;
-            cout << "Shipping Cost: ";
-            cin >> shippingCost;
-            cout << "Repair Cost: ";
-            cin >> repairCost;
+            std::cout << "Date: ";
+            std::cin >> date;
+            std::cout << "Item Number: ";
+            std::cin >> itemNumber;
+            std::cout << "Sold For Price: ";
+            std::cin >> soldForPrice;
+            std::cout << "Shipping Cost: ";
+            std::cin >> shippingCost;
+            std::cout << "Repair Cost: ";
+            std::cin >> repairCost;
 
-            fstream input("sales.txt");
+           std::ofstream salesFile("sales.txt", std::ios::app);
 
-            input.close();
+            salesFile << date << "  " << itemNumber << "  " << soldForPrice << "  " << shippingCost << "  " << repairCost << std::endl;
+
+            salesFile.close();
+
+            std::cout << "Sale has been added!" << std::endl;
 
         }
-
+        //Going to be problems
         void removeSale() {
             
 
